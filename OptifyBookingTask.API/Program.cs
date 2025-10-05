@@ -1,14 +1,20 @@
 
+using Microsoft.EntityFrameworkCore;
+using OptifyBookingTask.API.Extensions;
+using OptifyBookingTask.Domain.Contracts;
 using OptifyBookingTask.Infrastructure.Presistence;
+using OptifyBookingTask.Infrastructure.Presistence.Data;
 
 namespace OptifyBookingTask.API
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
 
+        public static async Task Main(string[] args)
+        {
+
+
+            var builder = WebApplication.CreateBuilder(args);
 
             #region Configure Services (DI)
 
@@ -22,12 +28,15 @@ namespace OptifyBookingTask.API
 
             #endregion
 
-
-
             var app = builder.Build();
 
+            #region Database Intialization
 
-            #region Configure Middleware
+            await app.IntializeBookingContextAsync(); 
+
+            #endregion
+
+            #region Configure Kestrel Middlewares
 
 
             if (app.Environment.IsDevelopment())
@@ -41,8 +50,6 @@ namespace OptifyBookingTask.API
             app.MapControllers();
 
             #endregion
-
-
 
             app.Run();
         }

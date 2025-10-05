@@ -9,5 +9,7 @@ namespace OptifyBookingTask.Domain.Entities
         public decimal Price { get; set; }
         public required string ImageUrl { get; set; }
         public required string Content { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.UtcNow;
+
     }
 }

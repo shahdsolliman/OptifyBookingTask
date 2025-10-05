@@ -1,0 +1,101 @@
+[
+  {
+    "Id": 0,
+    "Name": "Nile Cruise",
+    "CityName": "Cairo",
+    "Price": 1500.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599941/nile_lua396.jpg",
+    "Content": "<p>Enjoy a relaxing Nile cruise with full accommodation.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Pyramids Tour",
+    "CityName": "Giza",
+    "Price": 800.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599912/pyramids_n24rez.jpg",
+    "Content": "<p>Explore the Great Pyramids and the Sphinx.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Alexandria Day Trip",
+    "CityName": "Alexandria",
+    "Price": 600.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599908/alexandeia_g1qrro.jpg",
+    "Content": "<p>Discover the beauty of Alexandria's coastline and history.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Luxor & Aswan Temples",
+    "CityName": "Luxor",
+    "Price": 2200.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599913/Luxor_Aswan_Temples_cp6ozk.jpg",
+    "Content": "<p>Visit the Valley of the Kings, Karnak, and Luxor Temples.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Siwa Oasis Adventure",
+    "CityName": "Siwa",
+    "Price": 1800.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599908/Siwa_Oasis_Adventure_sad6cp.jpg",
+    "Content": "<p>Experience the tranquility of the desert and Siwa’s salt lakes.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Hurghada Beach Resort",
+    "CityName": "Hurghada",
+    "Price": 1300.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599908/Hurghada_Beach_Resort_vhloq2.jpg",
+    "Content": "<p>Enjoy crystal clear waters, coral reefs, and relaxation.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Dahab Diving Experience",
+    "CityName": "Dahab",
+    "Price": 1400.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599908/Dahab_rfkktr.jpg",
+    "Content": "<p>Scuba dive in the Blue Hole and explore Red Sea marine life.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Fayoum Nature Escape",
+    "CityName": "Fayoum",
+    "Price": 900.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599915/Fayoum_Nature_Escape_ufugyg.jpg",
+    "Content": "<p>Relax at Wadi El Rayan waterfalls and visit Tunis Village.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Saint Catherine Hike",
+    "CityName": "Sinai",
+    "Price": 1600.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599935/Saint_Catherine_Hike_joilga.jpg",
+    "Content": "<p>Climb Mount Sinai and visit Saint Catherine’s Monastery.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Marsa Alam Diving Trip",
+    "CityName": "Marsa Alam",
+    "Price": 2100.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599936/Marsa_Alam_Diving_Trip_s0ucht.jpg",
+    "Content": "<p>Explore the most beautiful diving spots in Marsa Alam.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  },
+  {
+    "Id": 0,
+    "Name": "Aswan Nubian Culture Tour",
+    "CityName": "Aswan",
+    "Price": 1700.00,
+    "ImageUrl": "https://res.cloudinary.com/daawob8go/image/upload/v1759599945/Aswan_Nubian_Culture_Tour_jksdcw.jpg",
+    "Content": "<p>Discover the Nubian village, its colors, and traditions.</p>",
+    "CreationDate": "2025-10-01T10:00:00"
+  }
+]

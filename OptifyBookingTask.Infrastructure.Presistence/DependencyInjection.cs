@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OptifyBookingTask.Domain.Contracts;
 using OptifyBookingTask.Infrastructure.Presistence.Data;
 
 namespace OptifyBookingTask.Infrastructure.Presistence
@@ -13,6 +14,8 @@ namespace OptifyBookingTask.Infrastructure.Presistence
             {
                 options.UseSqlServer(configuration.GetConnectionString("BookingContext"));
             });
+
+            services.AddScoped(typeof(IBookingContextIntializer), typeof(BookingContextIntializer));
 
             return services;
         }

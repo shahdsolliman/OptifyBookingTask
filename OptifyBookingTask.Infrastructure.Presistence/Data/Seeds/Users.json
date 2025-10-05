@@ -1,0 +1,27 @@
+[
+  {
+    "Id": 0,
+    "Email": "admin@optify.com",
+    "Password": "Admin@123"
+  },
+  {
+    "Id": 0,
+    "Email": "user1@optify.com",
+    "Password": "User@123"
+  },
+  {
+    "Id": 0,
+    "Email": "user2@optify.com",
+    "Password": "User@456"
+  },
+  {
+    "Id": 0,
+    "Email": "guest@optify.com",
+    "Password": "Guest@123"
+  },
+  {
+    "Id": 0,
+    "Email": "travel.agent@optify.com",
+    "Password": "Agent@2025"
+  }
+]
