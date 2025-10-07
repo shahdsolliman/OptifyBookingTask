@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OptifyBookingTask.Domain.Contracts;
@@ -16,6 +17,7 @@ namespace OptifyBookingTask.Infrastructure.Presistence
             });
 
             services.AddScoped(typeof(IBookingContextIntializer), typeof(BookingContextIntializer));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
             return services;
         }

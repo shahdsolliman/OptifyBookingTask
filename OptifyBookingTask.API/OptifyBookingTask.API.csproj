@@ -4,9 +4,18 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+
+	  <!-- Enable XML documentation file for Swagger -->
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+	  <!-- Disable warning 1591 (missing XML comment) -->
+	  <NoWarn>$(NoWarn);1591</NoWarn>
+	  
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OptifyBookingTask.Application\OptifyBookingTask.Application.csproj" />
     <ProjectReference Include="..\OptifyBookingTask.Infrastructure.Presistence\OptifyBookingTask.Infrastructure.Presistence.csproj" />
   </ItemGroup>
 

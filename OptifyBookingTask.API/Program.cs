@@ -1,9 +1,6 @@
-
-using Microsoft.EntityFrameworkCore;
 using OptifyBookingTask.API.Extensions;
-using OptifyBookingTask.Domain.Contracts;
 using OptifyBookingTask.Infrastructure.Presistence;
-using OptifyBookingTask.Infrastructure.Presistence.Data;
+using OptifyBookingTask.Application;
 
 namespace OptifyBookingTask.API
 {
@@ -23,8 +20,16 @@ namespace OptifyBookingTask.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // Swagger + XML Comments
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
+
             // Add DbContext
             builder.Services.AddPresistenceServices(builder.Configuration);
+            builder.Services.AddApplicationServices();
 
             #endregion
 
