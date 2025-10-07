@@ -1,6 +1,8 @@
 using OptifyBookingTask.API.Extensions;
 using OptifyBookingTask.Infrastructure.Presistence;
 using OptifyBookingTask.Application;
+using OptifyBookingTask.API.Controllers.Errors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OptifyBookingTask.API
 {
@@ -16,7 +18,27 @@ namespace OptifyBookingTask.API
             #region Configure Services (DI)
 
             // Add services
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.SuppressModelStateInvalidFilter = false;   // Will Not Excute any endpoint if ModelState is Invalid
+                    options.InvalidModelStateResponseFactory = (actionContext) =>
+                    {
+                        var errors = actionContext.ModelState
+                            .Where(e => e.Value?.Errors.Count > 0)
+                            .Select(e => new ApiValidationErrorResponse.ValidationError()
+                            {
+                                Field = e.Key,
+                                Error = e.Value!.Errors.Select(x => x.ErrorMessage)
+                            }).ToArray();
+                        return new BadRequestObjectResult(new ApiValidationErrorResponse("Validation errors occurred")
+                        {
+                            Errors = errors
+                        });
+                    };
+
+                });
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -37,7 +59,7 @@ namespace OptifyBookingTask.API
 
             #region Database Intialization
 
-            await app.IntializeBookingContextAsync(); 
+            await app.IntializeBookingContextAsync();
 
             #endregion
 
@@ -51,8 +73,14 @@ namespace OptifyBookingTask.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+
             app.UseAuthorization();
-            app.MapControllers();
+
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+
 
             #endregion
 
