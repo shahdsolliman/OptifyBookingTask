@@ -27,5 +27,14 @@ namespace OptifyBookingTask.Infrastructure.Presistence.Repositories
 
         public void Update(TEntity entity)
             => _dbContext.Set<TEntity>().Update(entity);
+
+        public IQueryable<TEntity> Query(bool withTracking = false)
+        {
+            return withTracking
+                ? _dbContext.Set<TEntity>()
+                : _dbContext.Set<TEntity>().AsNoTracking();
+        }
+
+
     }
 }

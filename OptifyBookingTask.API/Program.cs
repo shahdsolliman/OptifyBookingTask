@@ -74,12 +74,16 @@ namespace OptifyBookingTask.API
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseMiddleware<OptifyBookingTask.API.Middlewares.ExceptionHandlerMiddleware>();
 
+            app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+
+            app.MapControllers();
+
 
 
             #endregion

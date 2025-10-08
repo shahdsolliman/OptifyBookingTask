@@ -8,7 +8,7 @@ namespace OptifyBookingTask.Application.Abstracts.Services
         Task<IEnumerable<ReservationToReturnDto>> GetReservationsAsync();
         Task<ReservationToReturnDto> GetReservationByIdAsync(int id);
         Task<ReservationToReturnDto> CreateReservationAsync(ReservationCreateDto dto);
-        Task<ReservationToReturnDto> UpdateReservationAsync(ReservationUpdateDto dto);
+        Task<ReservationToReturnDto> UpdateReservationAsync(int id, ReservationUpdateDto dto);
         Task<bool> DeleteReservationAsync(int id);
     }
 }

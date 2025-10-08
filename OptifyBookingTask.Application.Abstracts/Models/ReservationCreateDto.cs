@@ -1,4 +1,6 @@
-﻿namespace OptifyBookingTask.Application.Abstracts.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OptifyBookingTask.Application.Abstracts.Models
 {
     /// <summary>
     /// DTO used to create a new reservation.
@@ -8,21 +10,25 @@
         /// <summary>
         /// The ID of the user creating the reservation.
         /// </summary>
+        [Required] 
         public int UserId { get; set; }
 
         /// <summary>
         /// The ID of the trip to reserve.
         /// </summary>
+        [Required] 
         public int TripId { get; set; }
 
         /// <summary>
         /// The customer's full name.
         /// </summary>
-        public required string CustomerName { get; set; }
+        [Required] 
+        public string CustomerName { get; set; }
 
         /// <summary>
         /// The date when the reservation is scheduled.
         /// </summary>
+        [Required] 
         public DateTime ReservationDate { get; set; }
 
         /// <summary>

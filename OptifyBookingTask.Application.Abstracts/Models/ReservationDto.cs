@@ -1,7 +1,7 @@
 ﻿namespace OptifyBookingTask.Application.Abstracts.Models
 {
     // A general DTO for displaying all reservation details
-    public class ReservationDto
+    public record ReservationDto
     {
         public int Id { get; set; }
         public int UserId { get; set; }

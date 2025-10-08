@@ -1,10 +1,11 @@
-﻿using OptifyBookingTask.API.Controllers.Errors;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using OptifyBookingTask.API.Controllers.Errors;
 using OptifyBookingTask.Application.Exceptions;
 using System.Net;
 
 namespace OptifyBookingTask.API.Middlewares
 {
-    // Convention-based class for custom middleware
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
@@ -22,60 +23,51 @@ namespace OptifyBookingTask.API.Middlewares
         {
             try
             {
-                // Execute next middleware or the controller itself
                 await _next(httpContext);
-
-
-
             }
             catch (Exception ex)
             {
-                #region Logging
+                // Logging
                 if (_env.IsDevelopment())
-                {
                     _logger.LogError(ex, ex.Message);
-                }
                 else
-                {
-                    // TODO: log to external service or file
-                }
-                #endregion
+                    _logger.LogError("An unexpected error occurred.");
 
-                var response = HandleExceptionsAsync(httpContext, ex);
-
-                httpContext.Response.ContentType = "application/json";
-                await httpContext.Response.WriteAsync(response.ToString());
+                await HandleExceptionAsync(httpContext, ex);
             }
         }
 
-        private static ApiResponse HandleExceptionsAsync(HttpContext httpContext, Exception ex)
+        private async Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
+            context.Response.ContentType = "application/json";
+
             ApiResponse response;
+            int statusCode;
 
             switch (ex)
             {
                 case NotFoundException:
-                    httpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                    response = new ApiResponse((int)HttpStatusCode.NotFound, ex.Message);
+                    statusCode = (int)HttpStatusCode.NotFound;
+                    response = new ApiResponse(statusCode, ex.Message);
                     break;
 
                 case BadRequestException:
-                    httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    response = new ApiResponse((int)HttpStatusCode.BadRequest, ex.Message);
+                    statusCode = (int)HttpStatusCode.BadRequest;
+                    response = new ApiResponse(statusCode, ex.Message);
                     break;
 
                 default:
-                    httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
+                    statusCode = (int)HttpStatusCode.InternalServerError;
                     response = new ApiExceptionResponse(
-                        (int)HttpStatusCode.InternalServerError,
-                        ex.Message,
-                        ex.StackTrace ?? "No stack trace available."
+                        statusCode,
+                        _env.IsDevelopment() ? ex.Message : "Internal server error.",
+                        _env.IsDevelopment() ? ex.StackTrace ?? "No stack trace available." : null
                     );
                     break;
             }
 
-            return response;
+            context.Response.StatusCode = statusCode;
+            await context.Response.WriteAsJsonAsync(response);
         }
     }
 }
