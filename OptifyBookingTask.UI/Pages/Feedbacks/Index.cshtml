@@ -1,0 +1,72 @@
+﻿@page
+@model OptifyBookingTask.UI.Pages.Feedbacks.IndexModel
+@{
+    ViewData["Title"] = "User Feedbacks";
+}
+<!-- Feedbacks Section -->
+<section id="feedbacks" class="feedbacks-section py-5 mb-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">What Our Customers Say</h2>
+            <p class="text-muted">Real experiences from travelers who explored Egypt with us.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Feedback Card -->
+            <div class="col-md-4">
+                <div class="card feedback-card text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client 1" class="rounded-circle mb-3 m-auto" width="80" height="80">
+                    <h5 class="fw-bold">Sara Ahmed</h5>
+                    <p class="text-muted">"Amazing experience! The Nile cruise was absolutely perfect. Highly recommend!"</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card feedback-card text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client 2" class="rounded-circle mb-3 m-auto" width="80" height="80">
+                    <h5 class="fw-bold">Omar Hassan</h5>
+                    <p class="text-muted">"Loved the Pyramids Tour. Professional guides and well-organized schedule."</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card feedback-card text-center p-4">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client 3" class="rounded-circle mb-3 m-auto" width="80" height="80">
+                    <h5 class="fw-bold">Laila Mohamed</h5>
+                    <p class="text-muted">"The Alexandria day trip was beautiful! Everything was smooth and fun."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .feedback-card {
+        border: none;
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .feedback-card img {
+            object-fit: cover;
+            border: 3px solid #ffdd57;
+        }
+
+        .feedback-card h5 {
+            margin-top: 10px;
+            color: #004aad;
+        }
+
+        .feedback-card p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+</style>
+

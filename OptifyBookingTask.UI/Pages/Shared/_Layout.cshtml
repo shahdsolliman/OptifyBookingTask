@@ -1,0 +1,219 @@
+﻿@{
+    Layout = null;
+    var title = ViewData["Title"] ?? "OptifyBooking";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@title</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f6f9fc;
+            color: #333;
+        }
+
+        /* Navbar */
+        nav.navbar {
+            background-color: transparent ; 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            nav.navbar.scrolled {
+                background-color: #003c8f !important; 
+                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #ffdd57 !important;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+            .nav-link:hover {
+                color: #ffdd57 !important;
+            }
+
+        /* Hero Section */
+        .hero-layout {
+            height: 80vh;
+            background: url('https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+
+            .hero-layout::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(0,0,0,0.55);
+            }
+
+        .hero-content-layout {
+            position: relative;
+            z-index: 2;
+        }
+
+            .hero-content-layout h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+            }
+
+            .hero-content-layout p {
+                font-size: 1.25rem;
+                margin-top: 15px;
+            }
+
+            .hero-content-layout .btn-warning {
+                background-color: #ffdd57;
+                color: #004aad;
+                border: none;
+            }
+
+                .hero-content-layout .btn-warning:hover {
+                    background-color: #ffcc00;
+                }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #003c8f 0%, #004aad 100%);
+            color: white;
+        }
+
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+            .footer-link:hover {
+                color: #ffdd57;
+            }
+
+        .social-icon {
+            color: white;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+            .social-icon:hover {
+                color: #ffdd57;
+                transform: scale(1.15);
+            }
+
+        .footer hr {
+            opacity: 0.15;
+            margin: 1.5rem 0;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('nav.navbar');
+            if (window.scrollY > 150) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="bi bi-globe-americas"></i> OptifyBooking</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Trips">Trips</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Feedbacks">Feedbacks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#footer">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/MyBookings">My Bookings</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-layout">
+        <div class="hero-content-layout">
+            <h1>Discover Egypt Like Never Before</h1>
+            <p>Explore top destinations, book your next adventure, and create unforgettable memories.</p>
+            <a href="#trips" class="btn btn-warning mt-4 px-4 py-2 fw-semibold">Explore Trips</a>
+        </div>
+    </section>
+
+    <!-- Page Content -->
+    <div class="container mt-5 pt-4">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="fw-bold"><i class="bi bi-globe-americas text-warning me-2"></i>OptifyBooking</h4>
+                    <p class="opacity-75">Your gateway to discovering Egypt’s hidden gems. Premium travel experiences crafted just for you.</p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="text-warning mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="footer-link">Home</a></li>
+                        <li><a href="/Trips" class="footer-link">Trips</a></li>
+                        <li><a href="/MyBookings" class="footer-link">My Bookings</a></li>
+                        <li><a href="/Feedbacks" class="footer-link">Feedbacks</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-warning mb-3">Contact Us</h5>
+                    <p><i class="bi bi-envelope-fill text-warning me-2"></i> info@optifybooking.com</p>
+                    <p><i class="bi bi-telephone-fill text-warning me-2"></i> +20 111 111 111</p>
+                    <p><i class="bi bi-geo-alt-fill text-warning me-2"></i> Cairo, Egypt</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-warning mb-3">Follow Us</h5>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="text-center text-light small">
+                © @DateTime.Now.Year OptifyBooking — All Rights Reserved
+                <br />
+                <span class="opacity-75">Crafted with 💙 by Shahd Soliman</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

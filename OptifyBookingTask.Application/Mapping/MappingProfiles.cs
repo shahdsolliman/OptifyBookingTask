@@ -27,6 +27,8 @@ namespace OptifyBookingTask.Application.Mapping
                 .ForMember(dest => dest.TripName, opt => opt.MapFrom(src => src.Trip.Name))
                 .ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.Trip.CityName))
                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email));
+
+            CreateMap<Trip, TripDto>().ReverseMap();
         }
     }
 }

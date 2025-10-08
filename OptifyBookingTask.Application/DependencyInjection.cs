@@ -11,6 +11,8 @@ namespace OptifyBookingTask.Application
         {
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<ITripService, TripService>();
+
             return services;
         }
     }

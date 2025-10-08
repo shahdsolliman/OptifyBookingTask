@@ -1,0 +1,33 @@
+﻿@page "{id:int}"
+@model OptifyBookingTask.UI.Pages.Trips.DetailsModel
+@{
+    ViewData["Title"] = Model.Trip?.Name ?? "Trip Details";
+}
+
+<div class="container my-5 pb-5">
+    @if (Model.Trip != null)
+    {
+        <div class="row g-4 ">
+            <!-- Image -->
+            <div class="col-lg-6">
+                <img src="@Model.Trip.ImageUrl" alt="@Model.Trip.Name" class="img-fluid rounded shadow" />
+            </div>
+
+            <!-- Trip Info -->
+            <div class="col-lg-6 d-flex flex-column justify-content-center">
+                <h1 class="fw-bold">@Model.Trip.Name</h1>
+                <p class="text-muted mb-1"><i class="bi bi-geo-alt-fill text-danger"></i> @Model.Trip.CityName</p>
+                <p class="fw-semibold text-success fs-5">EGP @Model.Trip.Price.ToString("N0")</p>
+                <div class="trip-content mt-3">
+                    @Html.Raw(Model.Trip.Content)
+                </div>
+                <a href="/Trips" class="btn btn-warning mt-4 px-4 py-2">Back to Trips</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-center text-danger">Trip details not found.</p>
+        <a href="/Trips" class="btn btn-secondary mt-3">Back to Trips</a>
+    }
+</div>
