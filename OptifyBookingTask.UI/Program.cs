@@ -18,7 +18,7 @@ namespace OptifyBookingTask.UI
             });
 
             var app = builder.Build();
-            app.MapFallbackToPage("/Trips/Index");
+            //app.MapFallbackToPage("/Trips/Index");
 
             // Middlewares
             if (!app.Environment.IsDevelopment())

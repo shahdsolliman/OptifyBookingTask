@@ -1,0 +1,154 @@
+﻿@page "{id:int}"
+@model OptifyBookingTask.UI.Pages.Reservations.UpdateModel
+@{
+    ViewData["Title"] = "Update Reservation";
+}
+
+<div class="container py-5">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+                <h3 class="mb-0 fw-bold">
+                    <i class="bi bi-pencil-square me-2"></i> Update Reservation
+                </h3>
+            </div>
+
+            <div class="card-body p-4 bg-light">
+                @if (Model.Reservation != null)
+                {
+                    <form id="updateForm">
+                        <input type="hidden" id="TripId" value="@Model.TripId" />
+
+                        <div class="mb-3">
+                            <label for="CustomerName" class="form-label fw-semibold text-primary">
+                                Customer Name
+                            </label>
+                            <input type="text" id="CustomerName" class="form-control"
+                                   value="@Model.Reservation.CustomerName" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ReservationDate" class="form-label fw-semibold text-primary">
+                                Reservation Date
+                            </label>
+                            <input type="date" id="ReservationDate" class="form-control"
+                                   value="@Model.Reservation.ReservationDate.ToString("yyyy-MM-dd")" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Notes" class="form-label fw-semibold text-primary">
+                                Notes
+                            </label>
+                            <textarea id="Notes" class="form-control" rows="4"
+                                  placeholder="Add any additional notes...">@Model.Reservation.Notes</textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-success px-4 py-2">
+                                <i class="bi bi-save me-1"></i> Save Changes
+                            </button>
+
+                            <a asp-page="/Trips/Reservations/MyBookings"
+                               class="btn btn-outline-secondary px-4 py-2">
+                                <i class="bi bi-x-circle me-1"></i> Cancel
+                            </a>
+                        </div>
+
+                        <div id="message" class="text-success mt-3 fw-semibold"></div>
+                        <div id="error" class="text-danger mt-3 fw-semibold"></div>
+                    </form>
+                }
+                else
+                {
+                    <p class="text-danger text-center my-4 fs-5">
+                        <i class="bi bi-exclamation-circle me-2"></i> Reservation not found.
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#updateForm").on("submit", function (e) {
+                e.preventDefault();
+
+                const updatedReservation = {
+                    tripId: parseInt($("#TripId").val()),
+                    customerName: $("#CustomerName").val(),
+                    reservationDate: new Date($("#ReservationDate").val()).toISOString(),
+                    notes: $("#Notes").val(),
+                    userId: 1
+                };
+
+                $("#message").text("");
+                $("#error").text("");
+
+                $.ajax({
+                    url: `https://localhost:7141/api/reservations/@Model.Reservation.Id`,
+                    type: "PUT",
+                    contentType: "application/json",
+                    data: JSON.stringify(updatedReservation),
+                    success: function (res) {
+                        $("#message").text("✅ Reservation updated successfully!");
+                        setTimeout(() => {
+                            window.location.href = "/Trips/Reservations/MyBookings";
+                        }, 1500);
+                    },
+                    error: function (xhr) {
+                        $("#error").text(xhr.responseText || "❌ Error updating reservation.");
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    body {
+        background-color: #f6f9fc;
+    }
+
+    .card {
+        border-radius: 1.2rem;
+    }
+
+    .form-label {
+        font-size: 1rem;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        padding: 0.6rem 0.9rem;
+    }
+
+    .btn {
+        border-radius: 0.5rem;
+        font-weight: 600;
+    }
+
+    .btn-success {
+        background-color: #198754;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #157347;
+        }
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    #message, #error {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .text-primary {
+        color: #004aad !important;
+    }
+</style>

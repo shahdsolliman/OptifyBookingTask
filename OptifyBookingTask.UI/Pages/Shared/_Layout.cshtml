@@ -1,37 +1,37 @@
-﻿@{
-    Layout = null;
-    var title = ViewData["Title"] ?? "OptifyBooking";
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@title</title>
+    <title>@ViewData["Title"] - OptifyBooking</title>
 
-    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f6f9fc;
-            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
         }
 
         /* Navbar */
         nav.navbar {
-            background-color: transparent ; 
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+            background: linear-gradient(135deg, #003c8f 0%, #004aad 100%);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
             nav.navbar.scrolled {
-                background-color: #003c8f !important; 
                 box-shadow: 0 4px 12px rgba(0,0,0,0.25);
             }
 
@@ -49,50 +49,6 @@
             .nav-link:hover {
                 color: #ffdd57 !important;
             }
-
-        /* Hero Section */
-        .hero-layout {
-            height: 80vh;
-            background: url('https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            color: white;
-        }
-
-            .hero-layout::after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: rgba(0,0,0,0.55);
-            }
-
-        .hero-content-layout {
-            position: relative;
-            z-index: 2;
-        }
-
-            .hero-content-layout h1 {
-                font-size: 3.5rem;
-                font-weight: 700;
-            }
-
-            .hero-content-layout p {
-                font-size: 1.25rem;
-                margin-top: 15px;
-            }
-
-            .hero-content-layout .btn-warning {
-                background-color: #ffdd57;
-                color: #004aad;
-                border: none;
-            }
-
-                .hero-content-layout .btn-warning:hover {
-                    background-color: #ffcc00;
-                }
 
         /* Footer */
         .footer {
@@ -124,23 +80,14 @@
             opacity: 0.15;
             margin: 1.5rem 0;
         }
-    </style>
 
-    <script>
-        window.addEventListener('scroll', function () {
-            const navbar = document.querySelector('nav.navbar');
-            if (window.scrollY > 150) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
+        
+
+    </style>
 </head>
 <body>
-
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark px-4">
         <div class="container">
             <a class="navbar-brand" href="/"><i class="bi bi-globe-americas"></i> OptifyBooking</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -151,30 +98,21 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Trips">Trips</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Feedbacks">Feedbacks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Trips/Reservations/MyBookings">My Bookings</a></li>
                     <li class="nav-item"><a class="nav-link" href="#footer">Contact Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/MyBookings">My Bookings</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-layout">
-        <div class="hero-content-layout">
-            <h1>Discover Egypt Like Never Before</h1>
-            <p>Explore top destinations, book your next adventure, and create unforgettable memories.</p>
-            <a href="#trips" class="btn btn-warning mt-4 px-4 py-2 fw-semibold">Explore Trips</a>
-        </div>
-    </section>
-
     <!-- Page Content -->
-    <div class="container mt-5 pt-4">
+    <main class="mt-5 pt-5">
         @RenderBody()
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer id="footer" class="footer">
-        <div class="container">
+        <div class="container pb-3 pt-5">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
                     <h4 class="fw-bold"><i class="bi bi-globe-americas text-warning me-2"></i>OptifyBooking</h4>
@@ -215,5 +153,16 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('nav.navbar');
+            if (window.scrollY > 150) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

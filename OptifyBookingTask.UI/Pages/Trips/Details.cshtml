@@ -21,7 +21,10 @@
                 <div class="trip-content mt-3">
                     @Html.Raw(Model.Trip.Content)
                 </div>
-                <a href="/Trips" class="btn btn-warning mt-4 px-4 py-2">Back to Trips</a>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <a href="/Trips" class="btn btn-warning ">Back to Trips</a>
+                    <a asp-page="/Trips/Reservations/Create" asp-route-tripId="@Model.Trip.Id" class="btn btn-success">Book Now</a>
+                </div>
             </div>
         </div>
     }
