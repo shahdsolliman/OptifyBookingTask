@@ -1,47 +1,47 @@
 ﻿namespace OptifyBookingTask.Application.Abstracts.Models
 {
     /// <summary>
-    /// DTO returned when a reservation is retrieved.
+    /// DTO returned to the client after reservation creation, retrieval, or update.
     /// </summary>
-    public record ReservationToReturnDto
+    public class ReservationToReturnDto
     {
         /// <summary>
-        /// The reservation ID.
+        /// Reservation unique identifier.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The customer name.
+        /// Customer name for the reservation.
         /// </summary>
         public string CustomerName { get; set; } = string.Empty;
 
         /// <summary>
-        /// The name of the trip.
+        /// Name of the related trip.
         /// </summary>
         public string TripName { get; set; } = string.Empty;
 
         /// <summary>
-        /// The name of the city where the trip takes place.
+        /// City of the trip.
         /// </summary>
         public string CityName { get; set; } = string.Empty;
 
         /// <summary>
-        /// The date of the reservation.
+        /// Date when the reservation is scheduled.
         /// </summary>
         public DateTime ReservationDate { get; set; }
 
         /// <summary>
-        /// The date when the reservation was created.
+        /// Date when the reservation was created.
         /// </summary>
         public DateTime CreationDate { get; set; }
 
         /// <summary>
-        /// Optional notes.
+        /// Additional notes for the reservation.
         /// </summary>
         public string? Notes { get; set; }
 
         /// <summary>
-        /// The email of the user who made the reservation.
+        /// Email of the user who created the reservation.
         /// </summary>
         public string UserEmail { get; set; } = string.Empty;
     }

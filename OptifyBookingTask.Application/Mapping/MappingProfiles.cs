@@ -8,13 +8,25 @@ namespace OptifyBookingTask.Application.Mapping
     {
         public MappingProfiles()
         {
+            // Reservation -> ToReturnDto
             CreateMap<Reservation, ReservationToReturnDto>()
                 .ForMember(dest => dest.TripName, opt => opt.MapFrom(src => src.Trip.Name))
                 .ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.Trip.CityName))
                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email));
 
-            CreateMap<ReservationCreateDto, Reservation>();
-            CreateMap<ReservationUpdateDto, Reservation>();
+            // ReservationCreateDto -> Reservation
+            CreateMap<ReservationCreateDto, Reservation>()
+                .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(_ => DateTime.UtcNow))
+                .ReverseMap();
+
+            // ReservationUpdateDto -> Reservation
+            CreateMap<ReservationUpdateDto, Reservation>().ReverseMap();
+
+            // Reservation -> internal DTO (optional)
+            CreateMap<Reservation, ReservationDto>()
+                .ForMember(dest => dest.TripName, opt => opt.MapFrom(src => src.Trip.Name))
+                .ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.Trip.CityName))
+                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email));
         }
     }
 }

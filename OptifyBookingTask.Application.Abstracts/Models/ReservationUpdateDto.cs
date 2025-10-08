@@ -7,29 +7,18 @@ namespace OptifyBookingTask.Application.Abstracts.Models
     /// </summary>
     public record ReservationUpdateDto
     {
-        /// <summary>
-        /// The updated trip ID (if the trip is changed).
-        /// </summary>
-
-        [Required]
+        [Required(ErrorMessage = "TripId is required.")]
         public int TripId { get; set; }
 
-        /// <summary>
-        /// The updated customer name.
-        /// </summary>
-        [Required] 
-        public required string CustomerName { get; set; }
+        [Required(ErrorMessage = "Customer name is required.")]
+        [StringLength(100, ErrorMessage = "Customer name must not exceed 100 characters.")]
+        public string CustomerName { get; set; } = string.Empty;
 
-        /// <summary>
-        /// The updated reservation date.
-        /// </summary>
-
-        [Required] 
+        [Required(ErrorMessage = "Reservation date is required.")]
+        [DataType(DataType.DateTime)]
         public DateTime ReservationDate { get; set; }
 
-        /// <summary>
-        /// Updated notes (if any).
-        /// </summary>
+        [StringLength(500, ErrorMessage = "Notes cannot exceed 500 characters.")]
         public string? Notes { get; set; }
     }
 }

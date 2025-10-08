@@ -1,13 +1,16 @@
 ﻿namespace OptifyBookingTask.Application.Abstracts.Models
 {
-    // A general DTO for displaying all reservation details
-    public record ReservationDto
+    /// <summary>
+    /// Internal DTO for mapping reservation data between entities and responses.
+    /// </summary>
+    public class ReservationDto
     {
         public int Id { get; set; }
         public int UserId { get; set; }
         public string UserEmail { get; set; } = string.Empty;
         public int TripId { get; set; }
         public string TripName { get; set; } = string.Empty;
+        public string CityName { get; set; } = string.Empty;
         public string CustomerName { get; set; } = string.Empty;
         public DateTime ReservationDate { get; set; }
         public DateTime CreationDate { get; set; }
