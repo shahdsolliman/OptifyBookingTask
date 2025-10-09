@@ -213,18 +213,6 @@ Allows users to update existing reservations directly via API calls.
 
 ---
 
-## Deployment Notes
-- Both projects can be hosted independently or as part of the same solution.  
-- For production, ensure that:
-  - CORS is configured properly in the API.
-  - Connection strings and API base URLs are updated in both projects.
-  - HTTPS is enforced across all endpoints.
-- Recommended hosting setup:
-  - **API** on Azure App Service or IIS.
-  - **UI** hosted on the same server or separate instance for scalability.
-
----
-
 ## Author
 **Shahd Soliman**  
 Backend Developer – ASP.NET Core | Entity Framework Core  
