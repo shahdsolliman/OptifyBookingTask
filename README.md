@@ -1,4 +1,3 @@
-
 # Optify Booking Task – ASP.NET Core 9 Web API
 
 ## Project Overview
@@ -149,11 +148,86 @@ Example commits:
 - refactor(mapping): enhance AutoMapper profiles
 - chore(dto): add validation attributes and XML docs
 
-## Bonus (Upcoming Razor Pages UI)
-A simple Razor Pages UI will be added as a separate project to demonstrate the reservation management frontend.
+---
+
+## Razor Pages UI (Client)
+
+To complement the Web API, a **Razor Pages UI** project has been added to demonstrate how the API can be consumed from a lightweight frontend interface.  
+The UI allows users to **view**, **create**, **update**, and **delete reservations** through an intuitive web interface that communicates directly with the API.
+
+### Features
+- Integrated with the existing ASP.NET Core 9 Web API.  
+- Displays a list of all reservations fetched from `/api/reservations`.  
+- Supports adding, editing, and deleting reservations through Razor Pages forms.  
+- Real-time validation and success/error notifications.  
+- Fully responsive layout with clean, minimal design.
+
+### Project Structure
+```
+OptifyBookingTask/
+│
+├── OptifyBookingTask.API/          --> Web API Project
+├── OptifyBookingTask.Application/  --> Application Layer (Services, DTOs, Interfaces)
+├── OptifyBookingTask.Domain/       --> Entities and Core Models
+├── OptifyBookingTask.Infrastructure/ --> Data Access & EF Core Configurations
+└── OptifyBookingTask.UI/           --> Razor Pages Project (Client)
+```
+
+### Configuration
+1. Navigate to the **UI project folder**:
+   ```bash
+   cd OptifyBookingTask.UI
+   ```
+2. In `appsettings.json`, configure the API base URL:
+   ```json
+   "ApiSettings": {
+     "BaseUrl": "https://localhost:7141/api/"
+   }
+   ```
+3. The UI uses **HttpClient** to communicate with the API.  
+   Ensure both projects (`API` and `UI`) are running simultaneously.
+
+### Running the Razor Pages UI
+1. Build and run the API project first:
+   ```bash
+   dotnet run --project OptifyBookingTask.API
+   ```
+2. In a new terminal, run the Razor Pages project:
+   ```bash
+   dotnet run --project OptifyBookingTask.UI
+   ```
+3. Open your browser and navigate to:
+   ```
+   https://localhost:7200
+   ```
+
+### UI Preview
+**Home Page (Reservations List)**  
+Displays all reservations fetched from the API in a responsive table with options to edit or delete.
+
+**Create Reservation Page**  
+Form to add a new reservation with client-side validation and server-side integration.
+
+**Edit Reservation Page**  
+Allows users to update existing reservations directly via API calls.
+
+---
+
+## Deployment Notes
+- Both projects can be hosted independently or as part of the same solution.  
+- For production, ensure that:
+  - CORS is configured properly in the API.
+  - Connection strings and API base URLs are updated in both projects.
+  - HTTPS is enforced across all endpoints.
+- Recommended hosting setup:
+  - **API** on Azure App Service or IIS.
+  - **UI** hosted on the same server or separate instance for scalability.
+
+---
 
 ## Author
-Shahd Soliman  
+**Shahd Soliman**  
 Backend Developer – ASP.NET Core | Entity Framework Core  
 Cairo, Egypt  
-GitHub: https://github.com/shahdsolliman
+📧 shahd.soliman2050@gmail.com  
+🔗 [GitHub](https://github.com/shahdsolliman) | [LinkedIn](https://www.linkedin.com/in/shahd-soliman-0590872a3)
