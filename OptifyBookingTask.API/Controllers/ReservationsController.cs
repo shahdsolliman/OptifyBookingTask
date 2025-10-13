@@ -1,19 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Reservations.Commands.CreateReservation;
+using Application.Reservations.Commands.DeleteReservation;
+using Application.Reservations.Commands.UpdateReservation;
+using Application.Reservations.Queries.GetAllReservations;
+using Application.Reservations.Queries.GetReservationById;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using OptifyBookingTask.API.Common;
 using OptifyBookingTask.API.Controllers.Errors;
 using OptifyBookingTask.Application.Abstracts.Models;
-using OptifyBookingTask.Application.Abstracts.Services;
-using OptifyBookingTask.Application.Exceptions;
 
 namespace OptifyBookingTask.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
+    [Produces("application/json")]
     public class ReservationsController : BaseApiController
     {
-        private readonly IReservationService _reservationService;
+        private readonly IMediator _mediator;
 
-        public ReservationsController(IReservationService reservationService)
+        public ReservationsController(IMediator mediator)
         {
-            _reservationService = reservationService;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -23,11 +30,13 @@ namespace OptifyBookingTask.API.Controllers
         /// Sample request:
         /// GET /api/reservations
         /// </remarks>
+        /// <returns>List of reservations</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ReservationToReturnDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ReservationToReturnDto>>> GetAll()
         {
-            var reservations = await _reservationService.GetReservationsAsync();
+            var query = new GetAllReservationsQuery();
+            var reservations = await _mediator.Send(query);
             return Ok(reservations);
         }
 
@@ -39,14 +48,17 @@ namespace OptifyBookingTask.API.Controllers
         /// Sample request:
         /// GET /api/reservations/1
         /// </remarks>
+        /// <returns>Reservation details</returns>
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(ReservationToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ReservationToReturnDto>> GetById(int id)
         {
-            var reservation = await _reservationService.GetReservationByIdAsync(id);
+            var query = new GetReservationByIdQuery(id);
+            var reservation = await _mediator.Send(query);
+
             if (reservation == null)
-                throw new NotFoundException(nameof(ReservationToReturnDto), id);
+                return NotFound(new ApiResponse(404, $"Reservation with id {id} not found"));
 
             return Ok(reservation);
         }
@@ -64,6 +76,8 @@ namespace OptifyBookingTask.API.Controllers
         ///    "notes": "Some notes"
         /// }
         /// </remarks>
+        /// <param name="dto">Reservation create DTO</param>
+        /// <returns>Created reservation</returns>
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(typeof(ReservationToReturnDto), StatusCodes.Status201Created)]
@@ -82,7 +96,9 @@ namespace OptifyBookingTask.API.Controllers
                         })
                 });
 
-            var createdReservation = await _reservationService.CreateReservationAsync(dto);
+            var command = new CreateReservationCommand(dto);
+            var createdReservation = await _mediator.Send(command);
+
             return CreatedAtAction(nameof(GetById), new { id = createdReservation.Id }, createdReservation);
         }
 
@@ -91,7 +107,6 @@ namespace OptifyBookingTask.API.Controllers
         /// </summary>
         /// <param name="id">Reservation ID</param>
         /// <param name="dto">Updated reservation data</param>
-        /// <returns>Updated reservation</returns>
         /// <remarks>
         /// Sample request:
         /// PUT /api/reservations/1
@@ -102,6 +117,7 @@ namespace OptifyBookingTask.API.Controllers
         ///    "notes": "Updated notes"
         /// }
         /// </remarks>
+        /// <returns>Updated reservation</returns>
         [HttpPut("{id:int}")]
         [Consumes("application/json")]
         [ProducesResponseType(typeof(ReservationToReturnDto), StatusCodes.Status200OK)]
@@ -121,13 +137,14 @@ namespace OptifyBookingTask.API.Controllers
                         })
                 });
 
-            var updatedReservation = await _reservationService.UpdateReservationAsync(id, dto);
+            var command = new UpdateReservationCommand(id, dto);
+            var updatedReservation = await _mediator.Send(command);
+
             if (updatedReservation == null)
-                throw new NotFoundException(nameof(ReservationToReturnDto), id);
+                return NotFound(new ApiResponse(404, $"Reservation with id {id} not found"));
 
             return Ok(updatedReservation);
         }
-
 
         /// <summary>
         /// Delete a reservation by ID.
@@ -137,17 +154,16 @@ namespace OptifyBookingTask.API.Controllers
         /// Sample request:
         /// DELETE /api/reservations/1
         /// </remarks>
+        /// <returns>Delete result</returns>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(int id)
         {
-            var deleted = await _reservationService.DeleteReservationAsync(id);
-            if (!deleted)
-                throw new NotFoundException(nameof(ReservationToReturnDto), id);
+            var command = new DeleteReservationCommand(id);
+            await _mediator.Send(command);
 
-            return Ok(new ApiResponse(StatusCodes.Status200OK, "Reservation deleted successfully."));
+            return Ok(new ApiResponse(200, "Reservation deleted successfully."));
         }
-
     }
 }
