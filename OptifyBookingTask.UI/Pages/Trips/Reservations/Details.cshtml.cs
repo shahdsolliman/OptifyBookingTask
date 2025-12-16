@@ -15,7 +15,7 @@ namespace OptifyBookingTask.UI.Pages.Trips.Reservations
 
         public ReservationToReturnDto Reservation { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id, string? tripName, string? cityName)
         {
             var reservation =
                 await _httpClient.GetFromJsonAsync<ReservationToReturnDto>($"api/reservations/{id}");
@@ -23,6 +23,17 @@ namespace OptifyBookingTask.UI.Pages.Trips.Reservations
             if (reservation == null)
             {
                 return NotFound();
+            }
+
+            // If backend did not populate TripName/CityName, fall back to values passed from the create flow (if any)
+            if (!string.IsNullOrWhiteSpace(tripName) && string.IsNullOrWhiteSpace(reservation.TripName))
+            {
+                reservation.TripName = tripName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(cityName) && string.IsNullOrWhiteSpace(reservation.CityName))
+            {
+                reservation.CityName = cityName;
             }
 
             Reservation = reservation;

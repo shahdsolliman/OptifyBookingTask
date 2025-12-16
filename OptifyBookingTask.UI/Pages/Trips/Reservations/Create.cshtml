@@ -125,7 +125,8 @@
                             toast.show();
 
                             setTimeout(function() {
-                                window.location.href = "/Trips/Reservations/Details/" + data.id;
+                                const detailsUrl = `/Trips/Reservations/Details/${data.id}?tripName=${encodeURIComponent(data.tripName ?? "")}&cityName=${encodeURIComponent(data.cityName ?? "")}`;
+                                window.location.href = detailsUrl;
                             }, 1000);
                         } else {
                             $("#validationErrors").text("Unexpected server response.");
