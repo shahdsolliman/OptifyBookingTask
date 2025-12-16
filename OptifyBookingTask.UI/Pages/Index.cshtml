@@ -53,7 +53,7 @@
         /* Hero Section */
         .hero-layout {
             height: 100vh;
-            background: url('https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            background: url('https://res.cloudinary.com/daawob8go/image/upload/v1759599912/pyramids_n24rez.jpg') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -156,6 +156,61 @@
             opacity: 0.15;
             margin: 1.5rem 0;
         }
+
+        /* Reuse trips card styles for featured trips */
+        .featured-trips-section {
+            padding: 80px 0;
+        }
+
+        .trip-card {
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            background-color: #ffffff;
+        }
+
+            .trip-card:hover {
+                transform: translateY(-10px) scale(1.03);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            }
+
+            .trip-card img {
+                height: 220px;
+                object-fit: cover;
+                width: 100%;
+                transition: transform 0.4s ease;
+            }
+
+            .trip-card:hover img {
+                transform: scale(1.1);
+            }
+
+            .trip-card .card-body {
+                padding: 20px;
+            }
+
+            .trip-card h5 {
+                font-weight: 600;
+                color: #004aad;
+                font-size: 1.1rem;
+            }
+
+            .trip-card p {
+                color: #666;
+                font-size: 0.95rem;
+            }
+
+            .trip-card .btn-outline-primary {
+                transition: all 0.3s ease;
+            }
+
+                .trip-card .btn-outline-primary:hover {
+                    background-color: #004aad;
+                    color: #fff;
+                    border-color: #004aad;
+                }
     </style>
 </head>
 <body>
@@ -177,11 +232,15 @@
         </div>
     </nav>
 
-    <section class="hero-layout">
-        <div class="hero-content-layout text-center">
-            <h1 class="fw-bold">Discover Egypt Like Never Before</h1>
-            <p class="lead">Explore top destinations, book your next adventure, and create unforgettable memories.</p>
-            <a href="/Trips" class="btn btn-warning mt-4 px-4 py-2 fw-semibold">Explore Trips</a>
+    <section class="hero-layout d-flex align-items-center justify-content-center">
+        <div class="hero-content-layout text-center px-3">
+            <h1 class="fw-bold mb-3">Discover Egypt Like Never Before</h1>
+            <p class="lead mb-4">
+                Curated trips across Cairo, Luxor, Aswan, Sinai, and beyond—booked in just a few clicks.
+            </p>
+            <a href="/Trips" class="btn btn-warning mt-2 px-4 py-2 fw-semibold">
+                <i class="bi bi-compass me-1"></i> Explore Trips
+            </a>
         </div>
     </section>
 
@@ -250,51 +309,75 @@
         </div>
     </section>
 
-    <!-- Popular Trips (Static UI) -->
-    <section class="py-5 bg-light">
+    <!-- Featured Trips (Static UI using existing trip images) -->
+    <section class="featured-trips-section bg-light">
         <div class="container">
             <div class="text-center mb-4">
-                <h2 class="fw-bold text-primary">Popular Highlights</h2>
-                <p class="text-muted mb-0">A glimpse of the journeys travelers love the most.</p>
+                <h2 class="fw-bold text-primary">Featured Trips</h2>
+                <p class="text-muted mb-0">A glimpse of some of the experiences you can book with OptifyBooking.</p>
             </div>
 
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80"
-                             class="card-img-top" alt="Pyramids of Giza">
-                        <div class="card-body">
-                            <h5 class="card-title">Pyramids of Giza Escape</h5>
-                            <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger"></i> Giza, Egypt</p>
-                            <p class="card-text small text-muted">
-                                Half-day experience with guided tour, panoramic views, and photo stops.
+                    <div class="card trip-card text-center m-auto h-100">
+                        <img src="https://res.cloudinary.com/daawob8go/image/upload/v1759599912/pyramids_n24rez.jpg"
+                             class="card-img-top" alt="Pyramids Tour">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="mb-1">Pyramids Tour</h5>
+                            <p class="mb-2">
+                                <i class="bi bi-geo-alt-fill text-danger"></i> Giza
                             </p>
+                            <p class="fw-semibold text-success mb-3">EGP 800</p>
+                            <p class="small text-muted mb-3">
+                                Explore the Great Pyramids and the Sphinx with a guided experience.
+                            </p>
+                            <div class="mt-auto d-flex gap-2 justify-content-center">
+                                <a href="/Trips" class="btn btn-outline-primary btn-sm">
+                                    View Trips
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <img src="https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=800&q=80"
+                    <div class="card trip-card text-center m-auto h-100">
+                        <img src="https://res.cloudinary.com/daawob8go/image/upload/v1759599941/nile_lua396.jpg"
                              class="card-img-top" alt="Nile Cruise">
-                        <div class="card-body">
-                            <h5 class="card-title">Nile River Night Cruise</h5>
-                            <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger"></i> Cairo, Egypt</p>
-                            <p class="card-text small text-muted">
-                                Dinner cruise with live entertainment and skyline views along the Nile.
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="mb-1">Nile Cruise</h5>
+                            <p class="mb-2">
+                                <i class="bi bi-geo-alt-fill text-danger"></i> Cairo
                             </p>
+                            <p class="fw-semibold text-success mb-3">EGP 1,500</p>
+                            <p class="small text-muted mb-3">
+                                Relax on a Nile cruise with accommodation and unforgettable views.
+                            </p>
+                            <div class="mt-auto d-flex gap-2 justify-content-center">
+                                <a href="/Trips" class="btn btn-outline-primary btn-sm">
+                                    View Trips
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80"
-                             class="card-img-top" alt="Red Sea">
-                        <div class="card-body">
-                            <h5 class="card-title">Red Sea Getaway</h5>
-                            <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill text-danger"></i> Hurghada, Egypt</p>
-                            <p class="card-text small text-muted">
-                                Sun, snorkeling, and relaxation on Egypt’s world-famous Red Sea coast.
+                    <div class="card trip-card text-center m-auto h-100">
+                        <img src="https://res.cloudinary.com/daawob8go/image/upload/v1759599908/Hurghada_Beach_Resort_vhloq2.jpg"
+                             class="card-img-top" alt="Hurghada Beach Resort">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="mb-1">Hurghada Beach Resort</h5>
+                            <p class="mb-2">
+                                <i class="bi bi-geo-alt-fill text-danger"></i> Hurghada
                             </p>
+                            <p class="fw-semibold text-success mb-3">EGP 1,300</p>
+                            <p class="small text-muted mb-3">
+                                Enjoy crystal clear waters, coral reefs, and a relaxing Red Sea escape.
+                            </p>
+                            <div class="mt-auto d-flex gap-2 justify-content-center">
+                                <a href="/Trips" class="btn btn-outline-primary btn-sm">
+                                    View Trips
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
