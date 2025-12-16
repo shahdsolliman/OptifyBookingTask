@@ -17,11 +17,23 @@
                     <ul class="list-group list-group-flush mb-4" aria-label="Reservation summary">
                         <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
                             <span class="text-primary fw-semibold">Trip</span>
-                            <span>@Model.Reservation.TripName</span>
+                            <span>
+                                @(
+                                    !string.IsNullOrWhiteSpace(Model.Reservation.TripName)
+                                        ? Model.Reservation.TripName
+                                        : "N/A"
+                                 )
+                            </span>
                         </li>
                         <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
                             <span class="text-primary fw-semibold">City</span>
-                            <span>@Model.Reservation.CityName</span>
+                            <span>
+                                @(
+                                    !string.IsNullOrWhiteSpace(Model.Reservation.CityName)
+                                        ? Model.Reservation.CityName
+                                        : "N/A"
+                                 )
+                            </span>
                         </li>
                         <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
                             <span class="text-primary fw-semibold">Customer Name</span>
