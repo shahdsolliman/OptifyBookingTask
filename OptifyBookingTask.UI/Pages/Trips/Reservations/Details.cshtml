@@ -5,58 +5,69 @@
 }
 
 <div class="container py-5 mb-5">
-    <div class="col-lg-8 mx-auto">
-        <div class="card shadow-lg border-0 rounded-4">
-            <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
-                <h3 class="mb-0 fw-bold">
-                    <i class="bi bi-info-circle me-2"></i> Reservation Details
-                </h3>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="mb-4 text-center">
+                <h1 class="h3 fw-bold text-primary">Reservation Details</h1>
+                <p class="text-muted mb-0">Review your reservation information or manage it below.</p>
             </div>
 
-            <div class="card-body bg-light p-4">
-                <ul class="list-group list-group-flush mb-4">
-                    <li class="list-group-item py-3">
-                        <strong class="text-primary">Trip:</strong> @Model.Reservation.TripName
-                    </li>
-                    <li class="list-group-item py-3">
-                        <strong class="text-primary">City:</strong> @Model.Reservation.CityName
-                    </li>
-                    <li class="list-group-item py-3">
-                        <strong class="text-primary">Customer Name:</strong> @Model.Reservation.CustomerName
-                    </li>
-                    <li class="list-group-item py-3">
-                        <strong class="text-primary">Reservation Date:</strong> @Model.Reservation.ReservationDate.ToString("yyyy-MM-dd")
-                    </li>
-                    <li class="list-group-item py-3">
-                        <strong class="text-primary">Created On:</strong> @Model.Reservation.CreationDate.ToString("yyyy-MM-dd")
-                    </li>
-
-                    @if (!string.IsNullOrEmpty(Model.Reservation.Notes))
-                    {
-                        <li class="list-group-item py-3">
-                            <strong class="text-primary">Notes:</strong> @Model.Reservation.Notes
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body bg-light p-4">
+                    <ul class="list-group list-group-flush mb-4" aria-label="Reservation summary">
+                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-semibold">Trip</span>
+                            <span>@Model.Reservation.TripName</span>
                         </li>
-                    }
+                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-semibold">City</span>
+                            <span>@Model.Reservation.CityName</span>
+                        </li>
+                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-semibold">Customer Name</span>
+                            <span>@Model.Reservation.CustomerName</span>
+                        </li>
+                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-semibold">Reservation Date</span>
+                            <span>@Model.Reservation.ReservationDate.ToString("yyyy-MM-dd")</span>
+                        </li>
+                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-semibold">Created On</span>
+                            <span>@Model.Reservation.CreationDate.ToString("yyyy-MM-dd")</span>
+                        </li>
 
-                    <li class="list-group-item py-3">
-                        <strong class="text-primary">User Email:</strong> @Model.Reservation.UserEmail
-                    </li>
-                </ul>
+                        @if (!string.IsNullOrEmpty(Model.Reservation.Notes))
+                        {
+                            <li class="list-group-item py-3">
+                                <span class="text-primary fw-semibold d-block mb-1">Notes</span>
+                                <span>@Model.Reservation.Notes</span>
+                            </li>
+                        }
 
-                <div class="d-flex justify-content-between mt-4 gap-3">
-                    <a asp-page="/Trips/Reservations/Update" asp-route-id="@Model.Reservation.Id"
-                       class="btn btn-warning flex-grow-1 text-white fw-semibold">
-                        <i class="bi bi-pencil-square me-1"></i> Update
-                    </a>
+                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-semibold">User Email</span>
+                            <span>@Model.Reservation.UserEmail</span>
+                        </li>
+                    </ul>
 
-                    <button class="btn btn-danger flex-grow-1 fw-semibold" id="deleteReservation">
-                        <i class="bi bi-trash me-1"></i> Delete
-                    </button>
+                    <div class="d-flex justify-content-between mt-4 gap-3">
+                        <a asp-page="/Trips/Reservations/Update" asp-route-id="@Model.Reservation.Id"
+                           class="btn btn-warning flex-grow-1 text-white fw-semibold d-flex justify-content-center align-items-center">
+                            <i class="bi bi-pencil-square me-1"></i> Update
+                        </a>
 
-                    <a href="/Trips/Reservations/MyBookings"
-                       class="btn btn-outline-secondary flex-grow-1 fw-semibold">
-                        <i class="bi bi-arrow-left me-1"></i> Back
-                    </a>
+                        <button class="btn btn-danger flex-grow-1 fw-semibold d-flex justify-content-center align-items-center"
+                                id="deleteReservation">
+                            <span id="deleteReservationText">
+                                <i class="bi bi-trash me-1"></i> Delete
+                            </span>
+                        </button>
+
+                        <a href="/Trips/Reservations/MyBookings"
+                           class="btn btn-outline-secondary flex-grow-1 fw-semibold d-flex justify-content-center align-items-center">
+                            <i class="bi bi-arrow-left me-1"></i> Back
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,6 +92,13 @@
         $("#deleteReservation").click(function () {
             if (!confirm("Are you sure you want to delete this reservation?")) return;
 
+            const $deleteBtn = $("#deleteReservation");
+            const $deleteText = $("#deleteReservationText");
+            $deleteBtn.prop("disabled", true);
+            $deleteText.html(
+                '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Deleting...'
+            );
+
             $.ajax({
                 url: "https://localhost:7141/api/reservations/@Model.Reservation.Id",
                 type: "DELETE",
@@ -92,6 +110,8 @@
                 },
                 error: function (xhr) {
                     showToast("Error deleting reservation: " + (xhr.responseText || "Unknown error."), false);
+                    $deleteBtn.prop("disabled", false);
+                    $deleteText.html('<i class="bi bi-trash me-1"></i> Delete');
                 }
             });
         });

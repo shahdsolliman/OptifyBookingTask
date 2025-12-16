@@ -4,41 +4,63 @@
     ViewData["Title"] = "Book Trip";
 }
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-
 <div class="container my-5">
-    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
-        <div class="card-body">
-            <h3 class="card-title text-center mb-4">Book Trip: @Model.Trip.Name</h3>
-            <p class="text-center text-muted mb-4">City: @Model.Trip.CityName | Price: EGP @Model.Trip.Price</p>
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="mb-4 text-center">
+                <h1 class="h3 fw-bold text-primary">Book Your Trip</h1>
+                <p class="text-muted mb-0">Fill in your details below to confirm your reservation.</p>
+            </div>
 
-            <form id="reservationForm">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="h5 card-title text-center mb-2">Trip: @Model.Trip.Name</h2>
+                    <p class="text-center text-muted mb-4">
+                        <span class="me-3"><i class="bi bi-geo-alt-fill text-danger me-1"></i>@Model.Trip.CityName</span>
+                        <span><i class="bi bi-cash-stack text-success me-1"></i>EGP @Model.Trip.Price</span>
+                    </p>
+
+                    <form id="reservationForm" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" aria-live="polite"></div>
+
                 <div class="mb-3">
-                    <label asp-for="Reservation.CustomerName" class="form-label">Your Name</label>
-                    <input asp-for="Reservation.CustomerName" class="form-control" />
-                    <span asp-validation-for="Reservation.CustomerName" class="text-danger"></span>
-                </div>
+                            <label asp-for="Reservation.CustomerName" class="form-label fw-semibold">
+                                Your Name <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Reservation.CustomerName" class="form-control" aria-required="true" />
+                            <span asp-validation-for="Reservation.CustomerName" class="text-danger small"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Reservation.ReservationDate" class="form-label">Reservation Date</label>
-                    <input asp-for="Reservation.ReservationDate" type="date" class="form-control" />
-                    <span asp-validation-for="Reservation.ReservationDate" class="text-danger"></span>
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Reservation.ReservationDate" class="form-label fw-semibold">
+                                Reservation Date <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Reservation.ReservationDate" type="date" class="form-control" aria-required="true" />
+                            <span asp-validation-for="Reservation.ReservationDate" class="text-danger small"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Reservation.Notes" class="form-label">Notes</label>
-                    <textarea asp-for="Reservation.Notes" class="form-control"></textarea>
-                    <span asp-validation-for="Reservation.Notes" class="text-danger"></span>
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Reservation.Notes" class="form-label fw-semibold">Notes (optional)</label>
+                            <textarea asp-for="Reservation.Notes" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Reservation.Notes" class="text-danger small"></span>
+                        </div>
 
-                <div class="d-flex justify-content-between mt-4">
-                    <button type="submit" class="btn btn-primary flex-grow-1 me-2">Book Now</button>
-                    <a href="/Trips" class="btn btn-secondary flex-grow-1 ms-2">Cancel</a>
-                </div>
+                        <div class="d-flex justify-content-between mt-4 gap-2">
+                            <button type="submit"
+                                    id="submitReservationBtn"
+                                    class="btn btn-primary flex-grow-1 d-flex justify-content-center align-items-center">
+                                <span id="submitReservationText">Book Now</span>
+                            </button>
+                            <a href="/Trips"
+                               class="btn btn-outline-secondary flex-grow-1 d-flex justify-content-center align-items-center">
+                                Cancel
+                            </a>
+                        </div>
 
-                <div id="validationErrors" class="mt-3 text-danger"></div>
-            </form>
+                        <div id="validationErrors" class="mt-3 text-danger small" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -73,6 +95,13 @@
 
                 if (!$(this).valid()) return;
 
+                const $submitBtn = $("#submitReservationBtn");
+                const $submitText = $("#submitReservationText");
+                $submitBtn.prop("disabled", true);
+                $submitText.html(
+                    '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...'
+                );
+
                 // UserId fixed from seed data
                 const reservationData = {
                     userId: 1, 
@@ -100,6 +129,8 @@
                             }, 1000);
                         } else {
                             $("#validationErrors").text("Unexpected server response.");
+                            $submitBtn.prop("disabled", false);
+                            $submitText.text("Book Now");
                         }
                     },
                     error: function(xhr) {
@@ -111,6 +142,8 @@
                         } else {
                             $("#validationErrors").text(xhr.responseText);
                         }
+                        $submitBtn.prop("disabled", false);
+                        $submitText.text("Book Now");
                     }
                 });
             });

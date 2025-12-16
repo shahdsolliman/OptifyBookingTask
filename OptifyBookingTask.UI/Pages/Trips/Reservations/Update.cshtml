@@ -4,66 +4,81 @@
     ViewData["Title"] = "Update Reservation";
 }
 
-<div class="container py-5">
-    <div class="col-lg-8 mx-auto">
-        <div class="card shadow-lg border-0 rounded-4">
-            <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
-                <h3 class="mb-0 fw-bold">
-                    <i class="bi bi-pencil-square me-2"></i> Update Reservation
-                </h3>
+<div class="container py-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="mb-4 text-center">
+                <h1 class="h3 fw-bold text-primary">Update Reservation</h1>
+                <p class="text-muted mb-0">Adjust your reservation details and save your changes.</p>
             </div>
 
-            <div class="card-body p-4 bg-light">
-                @if (Model.Reservation != null)
-                {
-                    <form id="updateForm">
-                        <input type="hidden" id="TripId" value="@Model.TripId" />
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 bg-light">
+                    @if (Model.Reservation != null)
+                    {
+                        <form id="updateForm" novalidate>
+                            <input type="hidden" id="TripId" value="@Model.TripId" />
 
-                        <div class="mb-3">
-                            <label for="CustomerName" class="form-label fw-semibold text-primary">
-                                Customer Name
-                            </label>
-                            <input type="text" id="CustomerName" class="form-control"
-                                   value="@Model.Reservation.CustomerName" required />
-                        </div>
+                            <div class="mb-3">
+                                <label for="CustomerName" class="form-label fw-semibold text-primary">
+                                    Customer Name <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       id="CustomerName"
+                                       class="form-control"
+                                       value="@Model.Reservation.CustomerName"
+                                       required
+                                       aria-required="true" />
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="ReservationDate" class="form-label fw-semibold text-primary">
-                                Reservation Date
-                            </label>
-                            <input type="date" id="ReservationDate" class="form-control"
-                                   value="@Model.Reservation.ReservationDate.ToString("yyyy-MM-dd")" required />
-                        </div>
+                            <div class="mb-3">
+                                <label for="ReservationDate" class="form-label fw-semibold text-primary">
+                                    Reservation Date <span class="text-danger">*</span>
+                                </label>
+                                <input type="date"
+                                       id="ReservationDate"
+                                       class="form-control"
+                                       value="@Model.Reservation.ReservationDate.ToString("yyyy-MM-dd")"
+                                       required
+                                       aria-required="true" />
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="Notes" class="form-label fw-semibold text-primary">
-                                Notes
-                            </label>
-                            <textarea id="Notes" class="form-control" rows="4"
-                                  placeholder="Add any additional notes...">@Model.Reservation.Notes</textarea>
-                        </div>
+                            <div class="mb-3">
+                                <label for="Notes" class="form-label fw-semibold text-primary">
+                                    Notes (optional)
+                                </label>
+                                <textarea id="Notes"
+                                          class="form-control"
+                                          rows="4"
+                                          placeholder="Add any additional notes...">@Model.Reservation.Notes</textarea>
+                            </div>
 
-                        <div class="d-flex justify-content-between mt-4">
-                            <button type="submit" class="btn btn-success px-4 py-2">
-                                <i class="bi bi-save me-1"></i> Save Changes
-                            </button>
+                            <div class="d-flex justify-content-between mt-4 gap-2">
+                                <button type="submit"
+                                        id="saveReservationBtn"
+                                        class="btn btn-success px-4 py-2 flex-grow-1 d-flex justify-content-center align-items-center">
+                                    <span id="saveReservationText">
+                                        <i class="bi bi-save me-1"></i> Save Changes
+                                    </span>
+                                </button>
 
-                            <a asp-page="/Trips/Reservations/MyBookings"
-                               class="btn btn-outline-secondary px-4 py-2">
-                                <i class="bi bi-x-circle me-1"></i> Cancel
-                            </a>
-                        </div>
+                                <a asp-page="/Trips/Reservations/MyBookings"
+                                   class="btn btn-outline-secondary px-4 py-2 flex-grow-1 d-flex justify-content-center align-items-center">
+                                    <i class="bi bi-x-circle me-1"></i> Cancel
+                                </a>
+                            </div>
 
-                        <div id="message" class="text-success mt-3 fw-semibold"></div>
-                        <div id="error" class="text-danger mt-3 fw-semibold"></div>
-                    </form>
-                }
-                else
-                {
-                    <p class="text-danger text-center my-4 fs-5">
-                        <i class="bi bi-exclamation-circle me-2"></i> Reservation not found.
-                    </p>
-                }
+                            <div id="message" class="text-success mt-3 fw-semibold" aria-live="polite"></div>
+                            <div id="error" class="text-danger mt-2 fw-semibold" aria-live="polite"></div>
+                        </form>
+                    }
+                    else
+                    {
+                        <p class="text-danger text-center my-4 fs-5">
+                            <i class="bi bi-exclamation-circle me-2"></i> Reservation not found.
+                        </p>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -87,6 +102,14 @@
                 $("#message").text("");
                 $("#error").text("");
 
+                const $saveBtn = $("#saveReservationBtn");
+                const $saveText = $("#saveReservationText");
+
+                $saveBtn.prop("disabled", true);
+                $saveText.html(
+                    '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...'
+                );
+
                 $.ajax({
                     url: `https://localhost:7141/api/reservations/@Model.Reservation!.Id`,
                     type: "PUT",
@@ -100,6 +123,8 @@
                     },
                     error: function (xhr) {
                         $("#error").text(xhr.responseText || "❌ Error updating reservation.");
+                        $saveBtn.prop("disabled", false);
+                        $saveText.html('<i class="bi bi-save me-1"></i> Save Changes');
                     }
                 });
             });

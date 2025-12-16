@@ -16,15 +16,22 @@ namespace OptifyBookingTask.UI.Pages.Trips.Reservations
         [BindProperty]
         public ReservationCreateDto Reservation { get; set; } = new();
 
-        public TripDto Trip { get; set; } = default!;
+        public TripDto Trip { get; set; } = new();
 
-        public async Task OnGetAsync(int tripId)
+        public async Task<IActionResult> OnGetAsync(int tripId)
         {
-            Trip = await _httpClient.GetFromJsonAsync<TripDto>($"api/trips/{tripId}")
-                   ?? throw new Exception("Trip not found");
+            var trip = await _httpClient.GetFromJsonAsync<TripDto>($"api/trips/{tripId}");
+            if (trip == null)
+            {
+                return NotFound();
+            }
+
+            Trip = trip;
 
             Reservation.TripId = tripId;
             Reservation.ReservationDate = DateTime.Today;
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

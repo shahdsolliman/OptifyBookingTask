@@ -13,13 +13,19 @@ namespace OptifyBookingTask.UI.Pages.Trips.Reservations
             _httpClient = httpClientFactory.CreateClient("ApiClient");
         }
 
-        public ReservationToReturnDto Reservation { get; set; } = default!;
+        public ReservationToReturnDto Reservation { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Reservation = await _httpClient.GetFromJsonAsync<ReservationToReturnDto>($"api/reservations/{id}")
-                           ?? throw new Exception("Reservation not found");
+            var reservation =
+                await _httpClient.GetFromJsonAsync<ReservationToReturnDto>($"api/reservations/{id}");
 
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            Reservation = reservation;
             return Page();
         }
     }
