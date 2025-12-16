@@ -26,6 +26,7 @@ namespace OptifyBookingTask.Application.Services
 
         /// <summary>
         /// Get a single reservation by its ID, including related Trip and User.
+        /// Throws NotFoundException if the reservation does not exist.
         /// </summary>
         public async Task<ReservationToReturnDto> GetReservationByIdAsync(int id)
         {
@@ -36,7 +37,7 @@ namespace OptifyBookingTask.Application.Services
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (reservation == null)
-                return null;
+                throw new NotFoundException(nameof(ReservationToReturnDto), id);
 
             return _mapper.Map<ReservationToReturnDto>(reservation);
         }
@@ -60,11 +61,15 @@ namespace OptifyBookingTask.Application.Services
                 .Include(r => r.User)
                 .FirstOrDefaultAsync(r => r.Id == reservation.Id);
 
+            if (createdReservation == null)
+                throw new NotFoundException(nameof(ReservationToReturnDto), reservation.Id);
+
             return _mapper.Map<ReservationToReturnDto>(createdReservation);
         }
 
         /// <summary>
         /// Update an existing reservation by ID.
+        /// Throws NotFoundException if the reservation does not exist.
         /// </summary>
         public async Task<ReservationToReturnDto> UpdateReservationAsync(int id, ReservationUpdateDto dto)
         {
@@ -74,7 +79,7 @@ namespace OptifyBookingTask.Application.Services
             // Check if reservation exists
             var existingReservation = await reservationRepo.GetByIdAsync(id);
             if (existingReservation == null)
-                return null;
+                throw new NotFoundException(nameof(ReservationToReturnDto), id);
 
             // Validate Trip existence
             var tripExists = await tripRepo.GetByIdAsync(dto.TripId);
@@ -91,6 +96,9 @@ namespace OptifyBookingTask.Application.Services
                 .Include(r => r.Trip)
                 .Include(r => r.User)
                 .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (updatedReservation == null)
+                throw new NotFoundException(nameof(ReservationToReturnDto), id);
 
             return _mapper.Map<ReservationToReturnDto>(updatedReservation);
         }

@@ -88,7 +88,7 @@
                 $("#error").text("");
 
                 $.ajax({
-                    url: `https://localhost:7141/api/reservations/@Model.Reservation.Id`,
+                    url: `https://localhost:7141/api/reservations/@Model.Reservation!.Id`,
                     type: "PUT",
                     contentType: "application/json",
                     data: JSON.stringify(updatedReservation),

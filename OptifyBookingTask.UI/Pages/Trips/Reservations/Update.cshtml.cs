@@ -16,7 +16,7 @@ namespace OptifyBookingTask.UI.Pages.Reservations
         }
 
         [BindProperty]
-        public ReservationToReturnDto Reservation { get; set; }
+        public ReservationToReturnDto Reservation { get; set; } = new();
 
         public int TripId { get; set; }
 
@@ -55,9 +55,9 @@ namespace OptifyBookingTask.UI.Pages.Reservations
         }
     }
 
-    public class TripDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+        public class TripDto
+        {
+            public int Id { get; set; }
+            public string Name { get; set; } = string.Empty;
+        }
 }
