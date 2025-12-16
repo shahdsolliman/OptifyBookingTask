@@ -1,8 +1,106 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "About OptifyBooking";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container py-5 mb-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8 text-center">
+            <h1 class="fw-bold text-primary">@ViewData["Title"]</h1>
+            <p class="text-muted mb-0">
+                A modern way to discover, plan, and book unforgettable trips across Egypt.
+            </p>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h4 text-primary mb-3">
+                            <i class="bi bi-info-circle-fill me-2"></i> Who We Are
+                        </h2>
+                        <p class="text-muted mb-0">
+                            OptifyBooking is a lightweight booking platform focused on making it easy for travelers
+                            to explore Egypt’s most iconic destinations. From weekend getaways to longer adventures,
+                            we provide a clean experience for browsing trips, managing reservations, and staying informed
+                            about your journey.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mb-5">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h3 class="h5 text-success mb-3">
+                            <i class="bi bi-bullseye me-2"></i> Our Mission
+                        </h3>
+                        <p class="text-muted mb-0 small">
+                            To simplify the booking process for travelers and operators by providing a clear,
+                            intuitive interface that lets people focus on enjoying their trips—not managing logistics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h3 class="h5 text-warning mb-3">
+                            <i class="bi bi-eye-fill me-2"></i> Our Vision
+                        </h3>
+                        <p class="text-muted mb-0 small">
+                            To become a trusted digital companion for exploring Egypt, where travelers can confidently
+                            discover new destinations, manage bookings, and share their experiences with others.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section>
+        <div class="row">
+            <div class="col-lg-10">
+                <h2 class="h4 text-primary mb-3">
+                    <i class="bi bi-heart-fill me-2 text-danger"></i> What We Care About
+                </h2>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="border rounded-3 p-3 h-100 bg-light">
+                            <h5 class="h6 fw-semibold mb-1">Clarity</h5>
+                            <p class="small text-muted mb-0">
+                                Clear trip details, transparent pricing, and straightforward actions on every page.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded-3 p-3 h-100 bg-light">
+                            <h5 class="h6 fw-semibold mb-1">Reliability</h5>
+                            <p class="small text-muted mb-0">
+                                A consistent experience that behaves as expected—from browsing to booking and managing reservations.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded-3 p-3 h-100 bg-light">
+                            <h5 class="h6 fw-semibold mb-1">Simplicity</h5>
+                            <p class="small text-muted mb-0">
+                                A minimal, focused interface that keeps travelers on track without unnecessary noise.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

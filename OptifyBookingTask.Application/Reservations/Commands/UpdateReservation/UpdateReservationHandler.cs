@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using OptifyBookingTask.Application.Abstracts.Models;
 using OptifyBookingTask.Domain.Contracts;
 using OptifyBookingTask.Domain.Entities;
@@ -29,7 +30,16 @@ namespace Application.Reservations.Commands.UpdateReservation
             repo.Update(reservation);
             await _unitOfWork.CompleteAsync();
 
-            return _mapper.Map<ReservationToReturnDto>(reservation);
+            // Reload the updated reservation including Trip and User navigation properties
+            var updatedReservation = await repo.Query()
+                .Include(r => r.Trip)
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(r => r.Id == request.Id, cancellationToken);
+
+            if (updatedReservation == null)
+                throw new KeyNotFoundException($"Reservation with Id {request.Id} was not found after update.");
+
+            return _mapper.Map<ReservationToReturnDto>(updatedReservation);
         }
     }
 }
