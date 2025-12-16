@@ -12,72 +12,202 @@
                 <p class="text-muted mb-0">Review your reservation information or manage it below.</p>
             </div>
 
-            <div class="card shadow-lg border-0 rounded-4">
+            <div class="card shadow-lg border-0 rounded-4 mb-4">
                 <div class="card-body bg-light p-4">
-                    <ul class="list-group list-group-flush mb-4" aria-label="Reservation summary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center me-3"
+                             style="width: 40px; height: 40px;">
+                            <i class="bi bi-ticket-detailed-fill"></i>
+                        </div>
+                        <div>
+                            <h2 class="h5 mb-0">Reservation Summary</h2>
+                            <small class="text-muted">Overview of your current booking.</small>
+                        </div>
+                    </div>
+
+                    <ul class="list-group list-group-flush" aria-label="Reservation summary">
                         <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-semibold">Trip</span>
+                            <span class="text-primary fw-semibold">Reservation ID</span>
+                            <span class="fw-semibold">@Model.Reservation.Id</span>
+                        </li>
+                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-semibold">Destination</span>
                             <span>
                                 @(
                                     !string.IsNullOrWhiteSpace(Model.Reservation.TripName)
                                         ? Model.Reservation.TripName
                                         : "N/A"
                                  )
+                                @if (!string.IsNullOrWhiteSpace(Model.Reservation.CityName))
+                                {
+                                    <span class="text-muted ms-1">(@Model.Reservation.CityName)</span>
+                                }
                             </span>
                         </li>
                         <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-semibold">City</span>
-                            <span>
-                                @(
-                                    !string.IsNullOrWhiteSpace(Model.Reservation.CityName)
-                                        ? Model.Reservation.CityName
-                                        : "N/A"
-                                 )
+                            <span class="text-primary fw-semibold">Status</span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2">
+                                <i class="bi bi-check-circle me-1"></i> Confirmed
                             </span>
-                        </li>
-                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-semibold">Customer Name</span>
-                            <span>@Model.Reservation.CustomerName</span>
-                        </li>
-                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-semibold">Reservation Date</span>
-                            <span>@Model.Reservation.ReservationDate.ToString("yyyy-MM-dd")</span>
-                        </li>
-                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-semibold">Created On</span>
-                            <span>@Model.Reservation.CreationDate.ToString("yyyy-MM-dd")</span>
-                        </li>
-
-                        @if (!string.IsNullOrEmpty(Model.Reservation.Notes))
-                        {
-                            <li class="list-group-item py-3">
-                                <span class="text-primary fw-semibold d-block mb-1">Notes</span>
-                                <span>@Model.Reservation.Notes</span>
-                            </li>
-                        }
-
-                        <li class="list-group-item py-3 d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-semibold">User Email</span>
-                            <span>@Model.Reservation.UserEmail</span>
                         </li>
                     </ul>
+                </div>
+            </div>
 
-                    <div class="d-flex justify-content-between mt-4 gap-3">
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-circle bg-info-subtle text-info d-inline-flex align-items-center justify-content-center me-3"
+                                     style="width: 38px; height: 38px;">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h6 mb-0">Trip Information</h3>
+                                    <small class="text-muted">Where and when you are going.</small>
+                                </div>
+                            </div>
+
+                            <dl class="row mb-0 small">
+                                <dt class="col-5 text-muted">Trip</dt>
+                                <dd class="col-7 mb-2">
+                                    @(
+                                        !string.IsNullOrWhiteSpace(Model.Reservation.TripName)
+                                            ? Model.Reservation.TripName
+                                            : "N/A"
+                                     )
+                                </dd>
+
+                                <dt class="col-5 text-muted">City</dt>
+                                <dd class="col-7 mb-2">
+                                    @(
+                                        !string.IsNullOrWhiteSpace(Model.Reservation.CityName)
+                                            ? Model.Reservation.CityName
+                                            : "N/A"
+                                     )
+                                </dd>
+
+                                <dt class="col-5 text-muted">Reservation Date</dt>
+                                <dd class="col-7 mb-0">
+                                    @Model.Reservation.ReservationDate.ToString("yyyy-MM-dd")
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-circle bg-warning-subtle text-warning d-inline-flex align-items-center justify-content-center me-3"
+                                     style="width: 38px; height: 38px;">
+                                    <i class="bi bi-person-badge-fill"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h6 mb-0">Customer Information</h3>
+                                    <small class="text-muted">Who made this reservation.</small>
+                                </div>
+                            </div>
+
+                            <dl class="row mb-0 small">
+                                <dt class="col-5 text-muted">Customer Name</dt>
+                                <dd class="col-7 mb-2">
+                                    @Model.Reservation.CustomerName
+                                </dd>
+
+                                <dt class="col-5 text-muted">User Email</dt>
+                                <dd class="col-7 mb-2">
+                                    @Model.Reservation.UserEmail
+                                </dd>
+
+                                <dt class="col-5 text-muted">Notes</dt>
+                                <dd class="col-7 mb-0">
+                                    @if (!string.IsNullOrWhiteSpace(Model.Reservation.Notes))
+                                    {
+                                        @Model.Reservation.Notes
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No additional notes.</span>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary-subtle text-secondary d-inline-flex align-items-center justify-content-center me-3"
+                             style="width: 38px; height: 38px;">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div>
+                            <h3 class="h6 mb-0">Reservation Timeline</h3>
+                            <small class="text-muted">Key dates for this booking.</small>
+                        </div>
+                    </div>
+
+                    <div class="row small">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <div class="border rounded-3 p-3 h-100 bg-light-subtle">
+                                <span class="text-muted d-block mb-1">
+                                    <i class="bi bi-calendar-check me-1 text-success"></i>
+                                    Reserved For
+                                </span>
+                                <span class="fw-semibold">
+                                    @Model.Reservation.ReservationDate.ToString("dddd, dd MMM yyyy")
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-3 h-100 bg-light-subtle">
+                                <span class="text-muted d-block mb-1">
+                                    <i class="bi bi-calendar-event me-1 text-primary"></i>
+                                    Created On
+                                </span>
+                                <span class="fw-semibold">
+                                    @Model.Reservation.CreationDate.ToString("dddd, dd MMM yyyy")
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-danger-subtle text-danger d-inline-flex align-items-center justify-content-center me-3"
+                             style="width: 38px; height: 38px;">
+                            <i class="bi bi-tools"></i>
+                        </div>
+                        <div>
+                            <h3 class="h6 mb-0">Actions</h3>
+                            <small class="text-muted">Manage or go back to your bookings.</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-between mt-2 gap-2">
                         <a asp-page="/Trips/Reservations/Update" asp-route-id="@Model.Reservation.Id"
-                           class="btn btn-warning flex-grow-1 text-white fw-semibold d-flex justify-content-center align-items-center">
-                            <i class="bi bi-pencil-square me-1"></i> Update
+                           class="btn btn-warning text-white fw-semibold d-flex justify-content-center align-items-center flex-grow-1">
+                            <i class="bi bi-pencil-square me-1"></i> Update Reservation
                         </a>
 
-                        <button class="btn btn-danger flex-grow-1 fw-semibold d-flex justify-content-center align-items-center"
+                        <button class="btn btn-danger fw-semibold d-flex justify-content-center align-items-center flex-grow-1"
                                 id="deleteReservation">
                             <span id="deleteReservationText">
-                                <i class="bi bi-trash me-1"></i> Delete
+                                <i class="bi bi-trash me-1"></i> Cancel Reservation
                             </span>
                         </button>
 
                         <a href="/Trips/Reservations/MyBookings"
-                           class="btn btn-outline-secondary flex-grow-1 fw-semibold d-flex justify-content-center align-items-center">
-                            <i class="bi bi-arrow-left me-1"></i> Back
+                           class="btn btn-outline-secondary fw-semibold d-flex justify-content-center align-items-center flex-grow-1">
+                            <i class="bi bi-arrow-left me-1"></i> Back to My Bookings
                         </a>
                     </div>
                 </div>
