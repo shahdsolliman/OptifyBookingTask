@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using OptifyBookingTask.Application.Abstracts.Models;
 using OptifyBookingTask.Domain.Contracts;
 using OptifyBookingTask.Domain.Entities;
@@ -19,8 +20,11 @@ namespace Application.Reservations.Queries.GetAllReservations
 
         public async Task<IEnumerable<ReservationToReturnDto>> Handle(GetAllReservationsQuery request, CancellationToken cancellationToken)
         {
-            var repo = _unitOfWork.GetRepository<Reservation, int>();
-            var reservations = await repo.GetAllAsync();
+            var reservations = await _unitOfWork.GetRepository<Reservation, int>()
+                .Query()
+                .Include(r => r.Trip)
+                .Include(r => r.User)
+                .ToListAsync(cancellationToken);
 
             return _mapper.Map<IEnumerable<ReservationToReturnDto>>(reservations);
         }
